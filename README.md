@@ -4,6 +4,9 @@ correcthorse.py
 **correcthorse.py** generates passphrases that are long, secure and memorable,
 using true random numbers from RANDOM.org.
 
+Why do "true" random numbers matter? The reason is that computers are terrible at being random. In fact, they just can't do it. Computer-generated random numbers are always based on a seed, such as the system time. If you know the seed, you can reproduce the "random" information. RANDOM.org addresses this limitation by basing its random seed on [atmospheric radio noise](http://www.random.org/faq/#Q1.4), providing us with the closest thing possible to truly random computed-data.
+
+**correcthorse.py** retrieves random numbers from RANDOM.org over an SSL connection. It then matches those numbers against a list of over than 7000 words, creating passphrases with at least [64 bits](http://world.std.com/%7Ereinhold/dicewarefaq.html#howlong) of entropy. Although these passphrases are made up entirely of basic English words, they are more secure and harder to break than shorter passwords (even cryptic passwords filled with symbols and numbers). They're also much easier to remember.
 
 
 Dependencies
@@ -38,10 +41,10 @@ The name and inspiration for this program come from an xkcd comic:
 
 [http://xkcd.com/936/](http://xkcd.com/936)
 
-xkcd is written by Randall Munroe.
+xkcd is penned by Randall Munroe.
 
 
 Disclaimer
 ----------
 
-Long passphrases consisting of unrelated dictionary words are theoretically secure -- far more-so than typical passwords. They're also far easier to recall. That said, I cannot take responsibility for any data loss or security breaches that arise from usage of this tool. Please use common sense when signing up for online servies, and always take advantage of two-factor authentication if it's available.
+Long passphrases consisting of unrelated dictionary words are theoretically secure -- far more-so than typical passwords. They're also far easier to recall. That said, I cannot take responsibility for any data loss or security breaches that arise from usage of this tool. Please use common sense when signing up for online services, and always take advantage of two-factor authentication if it's available.
