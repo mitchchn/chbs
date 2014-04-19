@@ -20,9 +20,9 @@ Usage
 
 `python correcthorse.py --help` brings up the help menu.
 
-Running `python correcthorse.py` with no other options will generate a passphrase with five random words. By default, the random numbers used to select words are downloaded over SSL from RANDOM.org. __To use this service, you must have a (free) API key__. Acquire yours at: [https://api.random.org/api-keys/beta](https://api.random.org/api-keys/beta). Place it in a file named 'apikey'.
+Running `python correcthorse.py` with no other options will generate a passphrase with five random words. By default, the random numbers used to select words are downloaded over SSL from RANDOM.org. __To use this service, you must have a (free) API key. Acquire yours at: [https://api.random.org/api-keys/beta](https://api.random.org/api-keys/beta)__. Copy the key and paste it into a file named 'apikey'.
 
-You can bypass the online service and use the built-in pseudo-random number generator with the `-P` flag. Note that these results are not truly random, and passphrases created with this method should not be used to secure anything important.
+You can bypass the online service and use Python's pseudo-random number generator with the `-P` flag. Note that these results are not truly random, and passphrases created with this method should not be used to secure anything important.
 
 The number of words in the passphrase can be set with the `-n [num]` flag.
 
@@ -31,13 +31,13 @@ Some optional flags let you specify additional requirements for the passphrase: 
 Acknowledgements
 ----------------
 
-The word-matching algorithm and included wordlists are from Diceware:
+__The word-matching algorithm and included wordlists are from Diceware:__
 
 [http://world.std.com/~reinhold/diceware.html](http://world.std.com/~reinhold/diceware.html)
 
 Diceware is a trademark of Arnold G Reinhold.
 
-The name and inspiration for this program come from an xkcd comic:
+_The name and inspiration for this program come from an xkcd comic:_
 
 [http://xkcd.com/936/](http://xkcd.com/936)
 
