@@ -4,9 +4,9 @@ correcthorse.py
 **correcthorse.py** generates passphrases that are long, secure and memorable,
 using true random numbers from RANDOM.org.
 
-Why do "true" random numbers matter? The reason is that computers are terrible at being random. In fact, they just can't do it. Computer-generated random numbers are always based on a seed, such as the system time. If you know the seed, you can reproduce the "random" information. RANDOM.org addresses this limitation by basing its random seed on [atmospheric radio noise](http://www.random.org/faq/#Q1.4), providing us with the closest thing possible to truly random computed data.
+Why do "true" random numbers matter? Fact is, computers are terrible at being random. They just can't do it. Computer-generated random numbers are always based on a seed, such as the system time. If you know the seed, you can reproduce the "random" information. RANDOM.org addresses this limitation by basing its random seed on [atmospheric radio noise](http://www.random.org/faq/#Q1.4), providing us with the closest thing possible to truly random computed data.
 
-This command-line tool retrieves random numbers from RANDOM.org over an SSL connection. It then matches those numbers against a list of over 7000 words, creating passphrases with at least [64 bits](http://world.std.com/%7Ereinhold/dicewarefaq.html#howlong) of entropy. Although these passphrases are made up entirely of basic English words, they are more secure and harder to break than shorter passwords (even cryptic passwords filled with symbols and digits). They're also much easier to remember.
+This command-line tool retrieves true random numbers from RANDOM.org over an SSL connection. It then matches those numbers against a list of over 7000 words, creating passphrases with at least [64 bits](http://world.std.com/%7Ereinhold/dicewarefaq.html#howlong) of entropy. Although these passphrases are made up entirely of basic English words, they are more secure and harder to break than shorter passwords (even cryptic passwords filled with symbols and digits). They're also much easier to remember.
 
 
 Dependencies
