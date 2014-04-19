@@ -127,10 +127,9 @@ def random_symbol():
 def make_random_caps(wordlist):
     index = random.randint(0, len(wordlist) - 1)
     word_to_capitalize = wordlist[index]
-
     if not word_to_capitalize[0].isdigit():
-        new_word = word_to_capitalize.capitalize()
-        wordlist[index] = new_word
+        word_to_capitalize = word_to_capitalize.capitalize()
+        wordlist[index] = word_to_capitalize
     return wordlist
 
 
@@ -138,8 +137,8 @@ def append_random_digit(wordlist):
     index = random.randint(0, len(wordlist) - 1)
     word_to_append = wordlist[index]
     if not word_to_append[-1].isdigit():
-        new_word = "{}{}".format(word_to_append, random_digit())
-    wordlist[index] = new_word
+        word_to_append = "{}{}".format(word_to_append, random_digit())
+    wordlist[index] = word_to_append
     return wordlist
 
 
