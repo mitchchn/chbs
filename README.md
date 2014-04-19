@@ -41,7 +41,7 @@ __The name and inspiration come from an xkcd comic:__
 
 [http://xkcd.com/936/](http://xkcd.com/936)
 
-[!xkcd 936](http://imgs.xkcd.com/comics/password_strength.png)
+![xkcd 936](http://imgs.xkcd.com/comics/password_strength.png)
 
 xkcd is penned by Randall Munroe.
 
