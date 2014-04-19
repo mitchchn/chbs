@@ -14,15 +14,14 @@ __correcthorse.py__ retrieves true random numbers from RANDOM.org over an SSL co
 
 A passphrase is a password that doesn't suck as much. A good passphrase consists of 4-6 short, common words that aren't related but that can be recalled with a mnemonic or mental image. Something like: <a href="#xkcd">__correct horse battery staple__</a>. 
 
-Although passphrases are made up entirely of normal English words, they are more secure and harder to break than typical short passwords (even cryptic passwords filled with symbols and digits). They're also much easier to memorize. Passphrases work well with a password manager like [1Password](https://agilebits.com/onepassword), which can store them and fill them in automatically on sites.
-
+Although passphrases are made up entirely of normal English words, they are more secure and harder to break than typical short passwords (even cryptic passwords filled with symbols and digits). They're also much easier to memorize. Passphrases work swimmingly with a password manager like [1Password](https://agilebits.com/onepassword), which can store them and fill them in automatically on sites you visit.
 
 
 
 Dependencies
 ------------
 
-**py-jsonpc**: the official Python JSON-RPC implementation, used here to make secure requests from RANDOM.org. To install it: `pip install python-jsonrpc`
+**py-jsonrpc**: the official Python JSON-RPC implementation, used here to make secure requests from RANDOM.org. To install it: `pip install python-jsonrpc`
 
 
 Usage
@@ -59,4 +58,4 @@ The name and inspiration come from an [xkcd comic](http://xkcd.com/936/).
 Disclaimer
 ----------
 
-Long passphrases consisting of unrelated dictionary words are theoretically secure -- far more-so than typical passwords. They're also far easier to recall. That said, I cannot take responsibility for any data loss or security breaches that arise from usage of this tool. Please use common sense when signing up for online services, and always take advantage of two-factor authentication if it's available.
+Long passphrases consisting of unrelated dictionary words are theoretically secure -- far more-so than typical passwords. They're also far easier to recall. That said, I cannot take responsibility for any data loss or security breaches that arise from using this tool. Please use common sense when making and saving passwords and when signing up for online services with your personal data, and always take advantage of [two-factor authentication](http://www.pcmag.com/article2/0,2817,2456400,00.asp) if it's available.
