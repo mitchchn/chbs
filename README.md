@@ -6,9 +6,9 @@ using true random numbers from RANDOM.org.
 
 ###Why do "true" random numbers matter?###
 
-Computers are terrible at being random. In fact, they just can't do it. Computer-generated random numbers are always based on a seed, such as the system time. If you know the seed, you can reproduce the "random" information. RANDOM.org addresses this limitation by basing its random seed on [atmospheric radio noise](http://www.random.org/faq/#Q1.4), providing us with the closest thing possible to truly random computed data.
+Computers are terrible at being random; in fact, they just can't do it. Digital "random number generators" base their output on a seed, such as the system time. The numbers they generate might look arbitrary, but if you know the seed, you can reproduce the "random" numbers precisely. 
 
-__correcthorse.py__ retrieves true random numbers from RANDOM.org over an SSL connection. Then it matches those numbers against a list of over 7000 words, building passphrases with at least [64 bits](http://world.std.com/%7Ereinhold/dicewarefaq.html#howlong) of entropy.
+__correcthorse.py__  overcomes this limitation by sourcing its random data from [atmospheric radio noise](http://www.random.org/faq/#Q1.4). The script downloads true random numbers from RANDOM.org over an encrypted SSL connection. Then it matches those numbers against a list of over 7000 words, building strong passphrases with at least [64 bits](http://world.std.com/%7Ereinhold/dicewarefaq.html#howlong) of entropy.
 
 ###What's a passphrase?###
 
