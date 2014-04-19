@@ -2,7 +2,7 @@ correcthorse.py
 ================
 
 **correcthorse.py** generates passphrases that are long, secure and memorable,
-using true random numbers from RANDOM.org.
+using true random numbers downloaded securely from RANDOM.org.
 
 ###Why do "true" random numbers matter?###
 
