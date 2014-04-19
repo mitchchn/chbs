@@ -31,15 +31,18 @@ Some optional flags let you specify additional requirements for the passphrase: 
 Acknowledgements
 ----------------
 
-__The word-matching algorithm and included wordlists are from Diceware:__
+__correcthorse.py is an implementation of Diceware:__
 
 [http://world.std.com/~reinhold/diceware.html](http://world.std.com/~reinhold/diceware.html)
 
 Diceware is a trademark of Arnold G Reinhold.
 
-_The name and inspiration for this program come from an xkcd comic:_
+__The name and inspiration come from an xkcd comic:__
 
 [http://xkcd.com/936/](http://xkcd.com/936)
+
+[!xkcd 936](http://imgs.xkcd.com/comics/password_strength.png)
+Format: ![Alt Text](http://xkcd.com/936)
 
 xkcd is penned by Randall Munroe.
 
