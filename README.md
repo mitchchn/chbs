@@ -41,13 +41,11 @@ Acknowledgements
 ----------------
 
 
-correcthorse.py is an implementation of [Diceware](http://world.std.com/~reinhold/diceware.html).
+correcthorse.py is an implementation of [Diceware](http://world.std.com/~reinhold/diceware.html). Diceware is a trademark of Arnold G Reinhold.
 
-Diceware is a trademark of Arnold G Reinhold.
+The name and inspiration come from an [xkcd comic](http://xkcd.com/936/). xkcd is penned by Randall Munroe.
 
-The name and inspiration come from an [xkcd comic](http://xkcd.com/936/).
-
-<a name="xkcd">xkcd</a> is penned by Randall Munroe.
+<a name="xkcd"></a>
 
 <a href="http://xkcd.com/936/">
 ![xkcd 936](http://imgs.xkcd.com/comics/password_strength.png)
