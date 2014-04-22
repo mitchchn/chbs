@@ -1,6 +1,11 @@
 #!/usr/bin/env python
-"""correcthorse.py: Generates passphrases that are long, secure and memorable,
+"""
+correcthorse.py: Generates passphrases that are long, secure and memorable,
 using true random numbers from RANDOM.org
+
+Author: Mitchell Cohen (mitch.cohen@me.com)
+Created: April 15 2014
+Version: 0.2
 
 The word-matching algorithm and included wordlists are from Diceware:
 http://world.std.com/~reinhold/diceware.html
@@ -14,20 +19,12 @@ xkcd is written by Randall Munroe.
 
 """
 
-__version__ = 0.1
-
-'''
-Author: Mitchell Cohen (mitch.cohen@me.com)
-Created: April 15 2014
-'''
-
 
 import argparse
 import time
 import random
 import distutils.util
-
-import pyjsonrpc
+import randomapi
 
 # Constants
 DICEWARE_WORD_LENGTH = 5
@@ -38,67 +35,29 @@ WORDLIST_DEFAULT_FILENAME = "wordlist.asc"
 APIKEY_PATH = "apikey"
 API_BETA_URL = "https://api.random.org/api-keys/beta"
 
-# JSON-RPC settings for Random.org
-api_url = "https://api.random.org/json-rpc/1/invoke"
-http_client = pyjsonrpc.HttpClient(url=api_url)
-apiKey = ""
-
-# Global (state) variables for timing requests
-advisory_delay = 0
-time_since_last_request = 0
-
-
-# Wrap JSON-RPC calls in this method.
-
-def send_json_request(json_function):
-    global time_since_last_request
-    global advisory_delay
-
-    # Respect delay requests from the server
-    delay_in_seconds = advisory_delay / 1000
-
-    elapsed = time.clock() - time_since_last_request
-
-    if elapsed < delay_in_seconds:
-        print "Sleeping {} more seconds...".format(delay_in_seconds - elapsed)
-        time.sleep(delay_in_seconds)
-
-    response_json = json_function()
-    advisory_delay = response_json[
-        'advisoryDelay'] if response_json['advisoryDelay'] else 0
-
-    time_since_last_request = time.clock()
-    return response_json
-
-# Secure random generator that plugs into the RANDOM.org API
-
-
-def generate_integers(n, min, max):
-    global apiKey
-    json_function = lambda: http_client.generateIntegers(apiKey=apiKey, n=n, min=min, max=max)
-    response_json = send_json_request(json_function)
-    # Parse out the integers
-    random = response_json['random']
-    random_integers = random['data']
-    return random_integers
-
-
-# Return a list of pseudo-random numbers
-
+# RANDOM.org API
+true_random = randomapi.RandomJSONRPC
+api_key = ""
 
 def pseudo_random_integers(n, min, max):
     random_integers = [random.randint(min, max) for n in range(0, n)]
     return random_integers
 
 
-# Simulate sets of multiple dice rolls
+def true_random_integers(n, min, max):
+    random_integers = true_random.generate_signed_integers(n, min, max)
+    return random_integers
 
-def roll_dice(reps, sets, randomizer=generate_integers):
+
+def roll_dice(reps, sets, randomizer=true_random_integers):
+    """
+    Simulates sets of multiple dice rolls
+    """
     random_function = randomizer
     data = random_function(n=reps * sets, min=DICE_MIN, max=DICE_MAX)
 
     dicerolls = ["".join(str(x) for x in data[i:i + reps])
-                 for i in range(0, len(data), reps)]
+             for i in range(0, len(data), reps)]
 
     return dicerolls
 
@@ -226,7 +185,9 @@ errors and that the file is in the Diceware format
 
 
 def main():
-    global apiKey
+    global true_random
+    global api_key
+
     parser = buildParser()
 
     # Parse the arguments
@@ -243,17 +204,20 @@ def main():
 
     # If the user wants to use the online randomizer, they better have an API
     # key
-    if not args.P and not apiKey:
+    if not args.P and not api_key:
         try:
             with open(APIKEY_PATH) as fileIn:
-                apiKey = chomp(fileIn.readline())
+                api_key = chomp(fileIn.readline())
         except IOError:
             print "Please place a valid RANDOM.org API key in a file named '{}'".format(APIKEY_PATH)
             print "You can get your own beta key at: {}".format(API_BETA_URL)
             exit(1)
 
+    if not args.P:
+        true_random = true_random(api_key)
+
     # Are we using pseudo-random or random numbers?
-    random_function = pseudo_random_integers if args.P else generate_integers
+    random_function = pseudo_random_integers if args.P else true_random_integers
 
     # Load the wordlist
     if verbose:
@@ -268,12 +232,13 @@ def main():
         exit(1)
 
     # Getting true random numbers involves making a JSON request to RANDOM.org
-    if random_function is generate_integers:
+    if random_function is true_random_integers:
+        if verbose:
+            print "Requesting {} true random integers....".format(
+            number_of_words * DICEWARE_WORD_LENGTH)
         try:
-            if verbose:
-                print "Connecting to RANDOM.org..."
             dicerolls = roll_dice(reps=DICEWARE_WORD_LENGTH,
-                                  sets=number_of_words, randomizer=generate_integers)
+                   sets=number_of_words, randomizer=true_random_integers)
         except KeyError as error:
             print error
             print "Invalid API Key"
@@ -293,6 +258,13 @@ def main():
             else:
                 dicerolls = roll_dice(reps=DICEWARE_WORD_LENGTH,
                                       sets=number_of_words, randomizer=pseudo_random_integers)
+        print "OK."
+        # Verify the signatue
+        print "Verifying SHA-512 signature with RANDOM.org...."
+        if true_random.verify_signature():
+            print "OK."
+        else:
+            print "FAIL: The server returned 'false.' The data may have been tampered with."
     else:  # We are using the system's built-in RNG
         if verbose:
             print "Using pseudo-random generator (less secure)..."
