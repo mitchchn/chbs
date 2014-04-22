@@ -18,10 +18,15 @@ Although passphrases are made up entirely of normal English words, they are more
 
 
 
-Dependencies
+Changes
 ------------
 
-**py-jsonrpc**: the official Python JSON-RPC implementation, used here to make secure requests from RANDOM.org. To install it: `pip install python-jsonrpc`
+__2014-04-22: v0.2__
+
+- __Major new feature:__ correcthorse.py is now implements __digital signature verification__ by default. Random number data is already sent over the pipes encrypted with 4096-bit SSL, but now each request also comes with an SHA-512 hash signed by RANDOM.org. Verifying that hash lets correcthorse.py guard against tampering and man-in-the-middle attacks.
+- Removed the external dependency on python-jsonrpc
+- Rebuilt number generation code in a new API: randomapi
+
 
 
 Usage
