@@ -30,16 +30,18 @@ DICEWARE_WORD_LENGTH = 5
 DEFAULT_NUM_WORDS = 5
 DICE_MIN = 1
 DICE_MAX = 6
-WORDLIST_DEFAULT_FILENAME = "wordlist.asc"
-APIKEY_PATH = "apikey"
 API_BETA_URL = "https://api.random.org/api-keys/beta"
+
+WORDLIST_DEFAULT_FILENAME = "wordlist.asc"
+APIKEY_FILENAME = "apikey"
+APP_PATH = os.path.dirname(__file__)
+
 
 # RANDOM.org API
 true_random = randomapi.RandomJSONRPC
 api_key = ""
 
 # Variables
-dir = os.path.dirname(__file__)
 
 
 def pseudo_random_integers(n, min, max):
@@ -197,9 +199,10 @@ def main():
     args = parser.parse_args()
     number_of_words = args.n[0]
     phrase_length = number_of_words * DICEWARE_WORD_LENGTH
-    wordlist_filename = os.path.join(dir, WORDLIST_DEFAULT_FILENAME)
-    wordlist_path = os.path.realpath(
-        "".join(args.w)) if args.w else wordlist_filename
+    if args.w:
+        wordlist_path = os.path.realpath("".join(args.w))
+    else:
+        wordlist_path = os.path.join(APP_PATH, WORDLIST_DEFAULT_FILENAME)
     verbose = False if args.S else True
 
     options_dict = {"no_spaces": args.no_spaces,
@@ -210,9 +213,9 @@ def main():
     # If the user wants to use the online randomizer, they better have an API
     # key
     if not args.P and not api_key:
-        api_filename = os.path.join(dir, APIKEY_PATH)
+        api_path = os.path.join(APP_PATH, APIKEY_FILENAME)
         try:
-            with open(api_filename) as fileIn:
+            with open(api_path) as fileIn:
                 api_key = chomp(fileIn.readline())
         except IOError:
             print "Please place a valid RANDOM.org API key in a file named '{}'".format(APIKEY_PATH)
@@ -264,13 +267,15 @@ def main():
             else:
                 dicerolls = roll_dice(reps=DICEWARE_WORD_LENGTH,
                                       sets=number_of_words, randomizer=pseudo_random_integers)
-        print "OK."
-        # Verify the signatue
-        print "Verifying SHA-512 signature with RANDOM.org...."
-        if true_random.verify_signature():
+        if verbose:
             print "OK."
+            # Verify the signatue
+            print "Verifying SHA-512 signature with RANDOM.org...."
+        if true_random.verify_signature():
+            if verbose:
+                print "OK."
         else:
-            print "FAIL: The server returned 'false.' The data may have been tampered with."
+            print "Warning: the server returned 'false.' The data may have been tampered with."
     else:  # We are using the system's built-in RNG
         if verbose:
             print "Using pseudo-random generator (less secure)..."
