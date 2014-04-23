@@ -4,18 +4,21 @@ correcthorse.py
 **correcthorse.py** generates passphrases that are long, secure and memorable,
 using true random numbers from RANDOM.org.
 
-###Why do "true" random numbers matter?###
+####Why do "true" random numbers matter?####
 
 Computers are terrible at being random; in fact, they just can't do it. Digital "random number generators" base their output on a seed, such as the system time. The numbers they generate might look arbitrary, but if you know the seed, you can reproduce the "random" numbers precisely. 
 
 __correcthorse.py__  overcomes this limitation by sourcing its random data from [atmospheric radio noise](http://www.random.org/faq/#Q1.4). The script downloads true random numbers from RANDOM.org over an encrypted SSL connection. Then it matches those numbers against a list of over 7000 words, building strong passphrases with at least [64 bits](http://world.std.com/%7Ereinhold/dicewarefaq.html#howlong) of entropy.
 
-###What's a passphrase?###
+####What's a passphrase?####
 
 A passphrase is a password that doesn't suck as much. A good passphrase consists of 4-6 short, common words that aren't related but that can be recalled with a mnemonic or mental image. Something like: <a href="#xkcd">__correct horse battery staple__</a>. 
 
 Although passphrases are made up entirely of normal English words, they are more secure and harder to break than typical short passwords (even cryptic passwords filled with symbols and digits). They're also much easier to memorize. Passphrases work swimmingly with a password manager like [1Password](https://agilebits.com/onepassword), which can store them and fill them in automatically on sites you visit.
 
+####Is this safe?####
+
+correcthorse.py needs to connect to the internet to download true random numbers. It uses two independent measures to safeguard your data. First, all connections are made over 4096-bit SSL. Second, all requests are digitally-signed by the server with SHA-512 hashes. By comparing those hashes with the received data, it's possible to verify that the data came directly from RANDOM.org —- and not from a man-in-the-middle impostor.
 
 
 Changes
@@ -23,7 +26,8 @@ Changes
 
 __2014-04-22: v0.2__
 
-- __Major new feature:__ correcthorse.py is now implements __digital signature verification__ by default. Random number data is already sent over the pipes encrypted with 4096-bit SSL, but now each request also comes with an SHA-512 hash signed by RANDOM.org. Verifying that hash lets correcthorse.py guard against tampering and man-in-the-middle attacks.
+__Major new feature:__ correcthorse.py now implements __digital signature verification__ by default. All random number data is already sent over the pipes encrypted with 4096-bit SSL, but now each request also comes with an SHA-512 hash signed by RANDOM.org. Verifying that hash lets correcthorse.py guard against tampering and man-in-the-middle attacks.
+
 - Removed the external dependency on python-jsonrpc
 - Rebuilt number generation code in a new API: randomapi
 
