@@ -218,7 +218,7 @@ def main():
             with open(api_path) as fileIn:
                 api_key = chomp(fileIn.readline())
         except IOError:
-            print "Please place a valid RANDOM.org API key in a file named '{}'".format(APIKEY_PATH)
+            print "Please place a valid RANDOM.org API key in a file named '{}'".format(APIKEY_FILENAME)
             print "You can get your own beta key at: {}".format(API_BETA_URL)
             exit(1)
 
