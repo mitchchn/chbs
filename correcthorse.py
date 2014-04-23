@@ -198,10 +198,8 @@ def main():
     number_of_words = args.n[0]
     phrase_length = number_of_words * DICEWARE_WORD_LENGTH
     wordlist_filename = os.path.join(dir, WORDLIST_DEFAULT_FILENAME)
-    print wordlist_filename
     wordlist_path = os.path.realpath(
         "".join(args.w)) if args.w else wordlist_filename
-    print wordlist_path
     verbose = False if args.S else True
 
     options_dict = {"no_spaces": args.no_spaces,
