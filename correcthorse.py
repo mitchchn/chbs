@@ -19,9 +19,8 @@ xkcd is written by Randall Munroe.
 
 """
 
-
+import os
 import argparse
-import time
 import random
 import distutils.util
 import randomapi
@@ -38,6 +37,10 @@ API_BETA_URL = "https://api.random.org/api-keys/beta"
 # RANDOM.org API
 true_random = randomapi.RandomJSONRPC
 api_key = ""
+
+# Variables
+dir = os.path.dirname(__file__)
+
 
 def pseudo_random_integers(n, min, max):
     random_integers = [random.randint(min, max) for n in range(0, n)]
@@ -194,7 +197,9 @@ def main():
     args = parser.parse_args()
     number_of_words = args.n[0]
     phrase_length = number_of_words * DICEWARE_WORD_LENGTH
-    wordlist_path = "".join(args.w) if args.w else WORDLIST_DEFAULT_FILENAME
+    wordlist_path = os.path.realpath(
+        "".join(args.w)) if args.w else WORDLIST_DEFAULT_FILENAME
+    print wordlist_path
     verbose = False if args.S else True
 
     options_dict = {"no_spaces": args.no_spaces,
@@ -205,8 +210,9 @@ def main():
     # If the user wants to use the online randomizer, they better have an API
     # key
     if not args.P and not api_key:
+        api_filename = os.path.join(dir, APIKEY_PATH)
         try:
-            with open(APIKEY_PATH) as fileIn:
+            with open(api_filename) as fileIn:
                 api_key = chomp(fileIn.readline())
         except IOError:
             print "Please place a valid RANDOM.org API key in a file named '{}'".format(APIKEY_PATH)
